@@ -1,6 +1,7 @@
 // IGNORE_BACKEND: JS
 // RUN_PLAIN_BOX_FUNCTION
 // INFER_MAIN_MODULE
+// SKIP_DCE_DRIVEN
 
 // MODULE: export-nested-class
 // FILE: lib.kt
