@@ -409,7 +409,6 @@ fun usefulDeclarations(roots: Iterable<IrDeclaration>, context: JsIrBackendConte
         }
 
         context.additionalExportedDeclarations
-            .filter { it !in result }
             .forEach { it.enqueue(null, "from additionalExportedDeclarations", altFromFqn = "<ROOT>") }
     }
 
