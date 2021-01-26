@@ -44,7 +44,7 @@ import org.jetbrains.kotlin.ir.util.*
 //            fun foo(t: Any?) = foo(t as Int)  // Constructed bridge
 //          }
 //
-abstract class BridgesConstruction(val context: JsCommonBackendContext) : DeclarationTransformer {
+abstract class BridgesConstruction<T : JsCommonBackendContext>(val context: T) : DeclarationTransformer {
 
     private val specialBridgeMethods = SpecialBridgeMethods(context)
 
@@ -116,11 +116,7 @@ abstract class BridgesConstruction(val context: JsCommonBackendContext) : Declar
         specialMethodInfo: SpecialMethodWithDefaultInfo?
     ): IrFunction {
 
-        val origin =
-            if (bridge.hasStableJsName(context as? JsIrBackendContext))
-                JsLoweredDeclarationOrigin.BRIDGE_WITH_STABLE_NAME
-            else
-                JsLoweredDeclarationOrigin.BRIDGE_WITHOUT_STABLE_NAME
+        val origin = getBridgeOrigin(bridge)
 
         // TODO: Support offsets for debug info
         val irFunction = context.irFactory.buildFun {
@@ -180,6 +176,8 @@ abstract class BridgesConstruction(val context: JsCommonBackendContext) : Declar
         return irFunction
     }
 
+    abstract fun getBridgeOrigin(bridge: IrSimpleFunction): IrDeclarationOrigin
+
     // TODO: get rid of Unit check
     private fun IrBlockBodyBuilder.irCastIfNeeded(argument: IrExpression, type: IrType): IrExpression =
         if (argument.type.classifierOrNull == type.classifierOrNull) argument else irAs(argument, type)
@@ -195,7 +193,7 @@ abstract class BridgesConstruction(val context: JsCommonBackendContext) : Declar
 
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
-            if (other !is BridgesConstruction.FunctionAndSignature) return false
+            if (other !is BridgesConstruction<*>.FunctionAndSignature) return false
 
             return signature == other.signature
         }
