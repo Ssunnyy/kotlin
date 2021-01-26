@@ -93,6 +93,10 @@ class ReificationTrackerInterpreter : OptimizationBasicInterpreter() {
         return naryOperation
     }
 
+    override fun unaryOperation(insn: AbstractInsnNode?, value: BasicValue?): BasicValue? {
+        return super.unaryOperation(insn, value)
+    }
+
     override fun newValue(type: Type?): StrictBasicValue? {
         val value = if (Type.OBJECT == type?.sort || Type.ARRAY == type?.sort) {
             ReifiedBasicValue(type, isReified)
