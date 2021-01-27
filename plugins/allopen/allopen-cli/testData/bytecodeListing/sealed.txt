@@ -22,7 +22,8 @@ public class Sealed$C2 {
 @kotlin.Metadata
 public abstract class Sealed {
     // source: 'sealed.kt'
-    public method <init>(): void
+    private method <init>(): void
+    public synthetic method <init>(p0: kotlin.jvm.internal.DefaultConstructorMarker): void
     public inner class Sealed$C1
     public inner class Sealed$C2
 }
@@ -45,7 +46,8 @@ public final class Sealed2$C2 {
 @kotlin.Metadata
 public abstract class Sealed2 {
     // source: 'sealed.kt'
-    public method <init>(): void
+    private method <init>(): void
+    public synthetic method <init>(p0: kotlin.jvm.internal.DefaultConstructorMarker): void
     public final inner class Sealed2$C2
     public inner class Sealed2$C1
 }
